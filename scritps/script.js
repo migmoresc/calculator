@@ -13,7 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function escribirNumero(num) {
         console.log(num, visor_linea_2.innerHTML)
         if (visor_linea_2.innerHTML == "0") {
-            visor_linea_2.innerHTML = "" + num;
+            if (num == ".") {
+                visor_linea_2.innerHTML = "0" + num;
+            } else {
+                visor_linea_2.innerHTML = "" + num;
+            }
         } else if (visor_linea_2.innerHTML.length < 19) {
             if (ultimaAccion != "accion") {
                 visor_linea_2.innerHTML = visor_linea_2.innerHTML + num;
@@ -31,14 +35,61 @@ document.addEventListener("DOMContentLoaded", () => {
         ultimaAccion = "accion";
     }
 
+    function restar() {
+        operando1 = parseFloat(visor_linea_2.innerHTML);
+        // visor_linea_2.innerHTML = "0";
+        accion = "restar";
+        ultimaAccion = "accion";
+    }
+
+    function multiplicar() {
+        operando1 = parseFloat(visor_linea_2.innerHTML);
+        // visor_linea_2.innerHTML = "0";
+        accion = "multiplicar";
+        ultimaAccion = "accion";
+    }
+
+    function dividir() {
+        operando1 = parseFloat(visor_linea_2.innerHTML);
+        // visor_linea_2.innerHTML = "0";
+        accion = "dividir";
+        ultimaAccion = "accion";
+    }
+
     function resultado() {
         operando2 = parseFloat(visor_linea_2.innerHTML);
         switch (accion) {
             case "sumar":
                 result = operando1 + operando2;
                 break;
+            case "restar":
+                result = operando1 - operando2;
+                break;
+            case "multiplicar":
+                result = operando1 * operando2;
+                break;
+            case "dividir":
+                if (operando2 != 0) {
+                    result = operando1 / operando2;
+                } else {
+                    result = "Error"
+                }
+                break;
         }
         visor_linea_2.innerHTML = result;
+    }
+
+    function reset() {
+        visor_linea_2.innerHTML = "0";
+        operando1 = 0;
+    }
+
+    function borrar() {
+        if (visor_linea_2.innerHTML.length > 1) {
+            visor_linea_2.innerHTML = visor_linea_2.innerHTML.slice(0, -1);
+        } else {
+            visor_linea_2.innerHTML = "0";
+        }
     }
 
     function ejecutarAccion(e) {
@@ -64,9 +115,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
             case "del":
                 console.log("del");
+                borrar();
                 break;
             case "ac":
                 console.log("ac");
+                reset();
                 break;
             case "result":
                 console.log("result");
@@ -77,10 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
             case "exp":
                 console.log("exp");
-                break;
-            case "punto":
-                console.log("punto");
-                ponerPunto();
                 break;
             default:
                 console.log("num");
